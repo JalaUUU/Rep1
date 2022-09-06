@@ -26,3 +26,5 @@ jobs:
     - name: Install dependencies
       run: |
         python Main.py 10 2 
+        python Main.py 15 10
+        python Main.py 10 -2 
