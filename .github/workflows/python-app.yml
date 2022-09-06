@@ -25,4 +25,4 @@ jobs:
         python-version: "3.10"
     - name: Install dependencies
       run: |
-        python Main.py 10
+        python Main.py 5 + 5 10 - 5 10 * 2 10 / 2
