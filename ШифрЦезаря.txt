@@ -1,0 +1,87 @@
+    public class Program
+    {
+        static string strArray = "abcdefghijklmnopqrstuvwxyz";
+        static void Main(string[] args)
+        {
+            for (int j = 0; ;)
+            {
+                WriteLine("Введите строку для работы:");
+                string str = ReadLine();
+                int step = 0;
+
+                WriteLine("Введите шаг для работы:");
+                try
+                {
+                    step = Convert.ToInt32(ReadLine());
+                }
+                catch(OverflowException)
+                {
+                    WriteLine("Слишком большое число. Повторите попытку.\n");
+                    continue;
+                }
+                catch(FormatException)
+                {
+                    WriteLine("Шаг может быть только целым числом. Повторите попытку.\n");
+                    continue;
+                }
+
+                WriteLine("Введите 1, чтобы зашифровать строку.\nВведите 2, чтобы расшифровать строку.");
+                int key = Convert.ToInt32(ReadLine());
+
+                switch (key)
+                {
+                    case 1:
+                        WriteLine($"Зашифрованная строка - {Encrypt(str, step)}\n");
+                        break;
+
+                    case 2:
+                        WriteLine($"Расшифрованная строка - {Decrypt(str, step)}\n");
+                        break;
+                }
+            }
+        }
+
+        public static string Encrypt(string str, int step)
+        {
+
+            char[] array = strArray.ToCharArray(0, strArray.Length);
+            string encryptStr = string.Empty;
+
+            foreach (char s in str)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (s == array[i])
+                        encryptStr += array[(i + step % array.Length) % array.Length];
+                }
+            }
+
+            return encryptStr.Length == 0 ? str : encryptStr;
+        }
+
+        public static string Decrypt(string str, int step)
+        {
+            char[] array = strArray.ToCharArray(0, strArray.Length);
+            string decryptStr = string.Empty;
+
+            foreach (char s in str)
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (s == array[i])
+                    {
+                        try
+                        {
+                            decryptStr += array[(i - step % array.Length) % array.Length];
+                        }
+                        catch (Exception)
+                        {
+                            decryptStr += array[array.Length -Math.Abs(i - step % array.Length)];
+                        }
+                    }
+                }
+            }
+
+            return decryptStr.Length == 0 ? str : decryptStr;
+        }
+    }
